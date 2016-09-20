@@ -84,7 +84,7 @@
         },
         "automationSku": {
             "type": "string",
-            "defaultValue": "Free",
+            "defaultValue": "Basic",
             "allowedValues": [
                 "Free",
                 "Basic"
