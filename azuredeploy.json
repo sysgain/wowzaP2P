@@ -3,31 +3,13 @@
 	"contentVersion": "1.0.0.0",
 	"parameters": {
 		"deploymentName": {
-			"type": "string",
-			"defaultValue": "",
-			"metadata": {
-				"description": "Deployment Name"
-			}
-		},
-		"storageAccountName": {
-			"type": "string",
-			"defaultValue": "",
-			"metadata": {
-				"description": "Storage Account Name"
-			}
-		},
-		"containerName": {
-			"type": "string",
-			"defaultValue": "",
-			"metadata": {
-				"description": "Storage Container Name"
-			}
+			"type": "string"
 		},
 		"desktopUsername": {
 			"type": "string"
 		},
 		"desktopAdminPassword": {
-			"type": "securestring"
+			"type": "string"
 		},
 		"asperaUsername": {
 			"type": "string"
@@ -43,38 +25,37 @@
 		}
 
 
-
 	},
 	"variables": {},
 
 	"resources": [{
 			"apiVersion": "2015-01-01",
-			"name": "storageaccount",
+			"name": "ams",
 			"type": "Microsoft.Resources/deployments",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/storage/storage.json?token=ASxiu6maWjE4JeDZQ2Vjuu2L7CJWeGdjks5X4NxtwA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/ams/ams.json?token=ASxiu94rnms2s_VhbW6nSITJdPk2DNtuks5X6UAiwA%3D%3D",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-					"storageAccountName": {
-						"value": "[parameters('storageAccountName')]"
-					}
+
+
 				}
 
 			}
+
 		}, {
 			"apiVersion": "2015-01-01",
 			"name": "desktop",
 			"type": "Microsoft.Resources/deployments",
 			"dependsOn": [
-				"['Microsoft.Resources/deployments/storageaccount']"
+				"['Microsoft.Resources/deployments/ams']"
 			],
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/desktop/desktop.json?token=ASxiu8JBS-yT1YSI4vo5g_uwXTYbPbkfks5X4NxOwA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/desktop/desktop.json?token=ASxiu7d_vfel7Zpc9-uZxq4LLZ7fdvpRks5X6UXowA%3D%3D",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -82,34 +63,39 @@
 						"value": "[parameters('deploymentName')]"
 					},
 					"storageAccountName": {
-						"value": "[parameters('storageAccountName')]"
+						"value": "[reference('ams').outputs.Input_StorageAccounts_Name.value]"
+
 					},
 					"storageAccountKey": {
-						"value": "[reference('storageaccount').outputs.listKeysOutput.value]"
+						"value": "[reference('ams').outputs.Input_StorageAccounts_Keys.value]"
 					},
 					"containerName": {
-						"value": "[parameters('containerName')]"
+						"value": "videos"
 					},
 					"desktopUsername": {
-						"value": "[parameters('wowzaUsername')]"
+						"value": "[parameters('desktopUsername')]"
 					},
 					"desktopAdminPassword": {
-						"value": "[parameters('wowzaadminPassword')]"
+						"value": "[parameters('desktopAdminPassword')]"
 					}
 
+
+
 				}
+
 			}
-		}, {
+		},
+{
 			"apiVersion": "2015-01-01",
 			"name": "aspera",
 			"type": "Microsoft.Resources/deployments",
 			"dependsOn": [
-				"['Microsoft.Resources/deployments/storageaccount']"
+				"['Microsoft.Resources/deployments/ams']"
 			],
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/aspera/aspera.json?token=ASxiu2xjX_p-JVuUyVG_hi_ii_wdEBXZks5X4NurwA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/aspera/aspera.json?token=ASxiu2Sq3stLbExndakHu_HXm80A3LlVks5X6VDtwA%3D%3D",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -130,12 +116,12 @@
 			"name": "wowza",
 			"type": "Microsoft.Resources/deployments",
 			"dependsOn": [
-				"['Microsoft.Resources/deployments/storageaccount']"
+				"['Microsoft.Resources/deployments/ams']"
 			],
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/wowza/wowza.json?token=ASxiu41sXPak5ILzNF7-UWyHa7sPPxnPks5X4NwhwA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/wowza/wowza.json?token=ASxiuxk49THCp29nYA-a29TJR3-_CwZpks5X6VHmwA%3D%3D",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -143,13 +129,14 @@
 						"value": "[parameters('deploymentName')]"
 					},
 					"storageAccountName": {
-						"value": "[parameters('storageAccountName')]"
+						"value": "[reference('ams').outputs.Ouput_StorageAccounts_Name.value]"
+
 					},
 					"storageAccountKey": {
-						"value": "[reference('storageaccount').outputs.listKeysOutput.value]"
+						"value": "[reference('ams').outputs.Output_StorageAccounts_Keys.value]"
 					},
 					"containerName": {
-						"value": "[parameters('containerName')]"
+						"value": "videos"
 					},
 					"wowzaUsername": {
 						"value": "[parameters('wowzaUsername')]"
@@ -165,17 +152,13 @@
 
 	],
 	"outputs": {
-		"storageAccount": {
+		"Input_StorageAccounts_Name": {
 			"type": "String",
-			"value": "[parameters('storageAccountName')]"
+			"value": "[reference('ams').outputs.Input_StorageAccounts_Name.value]"
 		},
-		"accessKey": {
-			"type": "Object",
-			"value": "[reference('storageaccount').outputs.listKeysOutput.value]"
-		},
-		"BLOB Container": {
-			"type": "String",
-			"value": "[parameters('containerName')]"
+		"Input_StorageAccounts_Keys": {
+			"type": "string",
+			"value": "[reference('ams').outputs.Input_StorageAccounts_Keys.value]"
 		},
 		"desktopURL": {
 			"type": "String",
@@ -189,7 +172,6 @@
 			"type": "String",
 			"value": "[parameters('desktopAdminPassword')]"
 		},
-
 		"asperaURL": {
 			"type": "String",
 			"value": "[reference('aspera').outputs.asperaURL.value]"
@@ -213,6 +195,6 @@
 		"wowzaAdminPassword": {
 			"type": "String",
 			"value": "[parameters('wowzaAdminPassword')]"
-		}
 	}
+}
 }
