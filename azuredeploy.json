@@ -1,0 +1,218 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"deploymentName": {
+			"type": "string",
+			"defaultValue": "",
+			"metadata": {
+				"description": "Deployment Name"
+			}
+		},
+		"storageAccountName": {
+			"type": "string",
+			"defaultValue": "",
+			"metadata": {
+				"description": "Storage Account Name"
+			}
+		},
+		"containerName": {
+			"type": "string",
+			"defaultValue": "",
+			"metadata": {
+				"description": "Storage Container Name"
+			}
+		},
+		"desktopUsername": {
+			"type": "string"
+		},
+		"desktopAdminPassword": {
+			"type": "securestring"
+		},
+		"asperaUsername": {
+			"type": "string"
+		},
+		"asperaAdminPassword": {
+			"type": "securestring"
+		},
+		"wowzaUsername": {
+			"type": "string"
+		},
+		"wowzaAdminPassword": {
+			"type": "securestring"
+		}
+
+
+
+	},
+	"variables": {},
+
+	"resources": [{
+			"apiVersion": "2015-01-01",
+			"name": "storageaccount",
+			"type": "Microsoft.Resources/deployments",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/storage/storage.json?token=ASxiu6maWjE4JeDZQ2Vjuu2L7CJWeGdjks5X4NxtwA%3D%3D",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					}
+				}
+
+			}
+		}, {
+			"apiVersion": "2015-01-01",
+			"name": "desktop",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": [
+				"['Microsoft.Resources/deployments/storageaccount']"
+			],
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/desktop/desktop.json?token=ASxiu8JBS-yT1YSI4vo5g_uwXTYbPbkfks5X4NxOwA%3D%3D",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"deploymentName": {
+						"value": "[parameters('deploymentName')]"
+					},
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"storageAccountKey": {
+						"value": "[reference('storageaccount').outputs.listKeysOutput.value]"
+					},
+					"containerName": {
+						"value": "[parameters('containerName')]"
+					},
+					"desktopUsername": {
+						"value": "[parameters('wowzaUsername')]"
+					},
+					"desktopAdminPassword": {
+						"value": "[parameters('wowzaadminPassword')]"
+					}
+
+				}
+			}
+		}, {
+			"apiVersion": "2015-01-01",
+			"name": "aspera",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": [
+				"['Microsoft.Resources/deployments/storageaccount']"
+			],
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/aspera/aspera.json?token=ASxiu2xjX_p-JVuUyVG_hi_ii_wdEBXZks5X4NurwA%3D%3D",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"deploymentName": {
+						"value": "[parameters('deploymentName')]"
+					},
+					"asperaUsername": {
+						"value": "[parameters('asperaUsername')]"
+					},
+					"asperaAdminPassword": {
+						"value": "[parameters('asperaAdminPassword')]"
+					}
+
+				}
+			}
+		}, {
+			"apiVersion": "2015-01-01",
+			"name": "wowza",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": [
+				"['Microsoft.Resources/deployments/storageaccount']"
+			],
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/wowza/wowza.json?token=ASxiu41sXPak5ILzNF7-UWyHa7sPPxnPks5X4NwhwA%3D%3D",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"deploymentName": {
+						"value": "[parameters('deploymentName')]"
+					},
+					"storageAccountName": {
+						"value": "[parameters('storageAccountName')]"
+					},
+					"storageAccountKey": {
+						"value": "[reference('storageaccount').outputs.listKeysOutput.value]"
+					},
+					"containerName": {
+						"value": "[parameters('containerName')]"
+					},
+					"wowzaUsername": {
+						"value": "[parameters('wowzaUsername')]"
+					},
+					"wowzaAdminPassword": {
+						"value": "[parameters('wowzaadminPassword')]"
+					}
+
+				}
+			}
+		}
+
+
+	],
+	"outputs": {
+		"storageAccount": {
+			"type": "String",
+			"value": "[parameters('storageAccountName')]"
+		},
+		"accessKey": {
+			"type": "Object",
+			"value": "[reference('storageaccount').outputs.listKeysOutput.value]"
+		},
+		"BLOB Container": {
+			"type": "String",
+			"value": "[parameters('containerName')]"
+		},
+		"desktopURL": {
+			"type": "String",
+			"value": "[reference('desktop').outputs.desktopURL.value]"
+		},
+		"desktopUsername": {
+			"type": "String",
+			"value": "[parameters('desktopUsername')]"
+		},
+		"desktopAdminPassword": {
+			"type": "String",
+			"value": "[parameters('desktopAdminPassword')]"
+		},
+
+		"asperaURL": {
+			"type": "String",
+			"value": "[reference('aspera').outputs.asperaURL.value]"
+		},
+		"asperaUsername": {
+			"type": "String",
+			"value": "[parameters('asperaUsername')]"
+		},
+		"asperaAdminPassword": {
+			"type": "String",
+			"value": "[parameters('asperaAdminPassword')]"
+		},
+		"wowzaURL": {
+			"type": "String",
+			"value": "[reference('wowza').outputs.wowzaURL.value]"
+		},
+		"wowzaUsername": {
+			"type": "String",
+			"value": "[parameters('wowzaUsername')]"
+		},
+		"wowzaAdminPassword": {
+			"type": "String",
+			"value": "[parameters('wowzaAdminPassword')]"
+		}
+	}
+}
