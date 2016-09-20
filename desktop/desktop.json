@@ -10,7 +10,7 @@
 			"type": "string"
 		},
 		"storageAccountKey": {
-			"type": "Object"
+			"type": "string"
 		},
 		"containerName": {
 			"type": "string"
