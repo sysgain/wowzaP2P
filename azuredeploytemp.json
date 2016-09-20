@@ -9,7 +9,7 @@
 			"type": "string"
 		},
 		"desktopAdminPassword": {
-			"type": "string"
+			"type": "securestring"
 		},
 		"asperaUsername": {
 			"type": "string"
@@ -23,20 +23,29 @@
 		"wowzaAdminPassword": {
 			"type": "securestring"
 		},
-		"jobId": {
-            
+		"automationAccountName": {
 			"type": "string",
-            
-			"defaultValue": "24b18f62-aa2c-4528-ac10-1e3602eb4053",
-            
+			"defaultValue": "auto",
 			"metadata": {
-                
-			"description": "Generate a Job ID (GUID) from https://www.guidgenerator.com/online-guid-generator.aspx "
-            
+
+				"description": "The account name must not be empty, and must not exceed 50 characters in length.  The account name must start with a letter or number.  The account name can contain letters, numbers, and dashes.  The final character must be a letter or a number. "
+
+			}
+		},
+		"jobId": {
+
+			"type": "string",
+
+			"defaultValue": "24b18f62-aa2c-4528-ac10-1e3602eb4053",
+
+			"metadata": {
+
+				"description": "Generate a Job ID (GUID) from https://www.guidgenerator.com/online-guid-generator.aspx "
+
+			}
+
+
 		}
-
-
-	}
 	},
 	"variables": {},
 
@@ -47,21 +56,72 @@
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/ams/ams-with-automation.json",
+					"uri": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/ams/ams.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
-				"jobId": {
-						"value": "[parameters('jobId')]"
-					}
+
 
 
 				}
 
 			}
 
-		}, 
-				{
+		},
+
+		{
+			"apiVersion": "2015-01-01",
+			"name": "automationjob",
+			"type": "Microsoft.Resources/deployments",
+			"dependsOn": [
+				"['Microsoft.Resources/deployments/ams']"
+			],
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/ams/automationjob.json",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"automationAccountName": {
+						"value": "[parameters('automationAccountName')]"
+
+					},
+					"jobId": {
+						"value": "[parameters('jobId')]"
+					},
+					"MediaServices_Name": {
+						"value": "[reference('ams').outputs.MediaServices_Name.value]"
+					},
+					"MediaServices_Keys": {
+						"value": "[reference('ams').outputs.MediaServices_Keys.value]"
+					},
+					"Input_StorageAccounts_Name": {
+						"value": "[reference('ams').outputs.Input_StorageAccounts_Name.value]"
+					},
+					"Input_StorageAccounts_Keys": {
+						"value": "[reference('ams').outputs.Input_StorageAccounts_Keys.value]"
+					},
+					"Ouput_StorageAccounts_Name": {
+						"value": "[reference('ams').outputs.Ouput_StorageAccounts_Name.value]"
+					},
+					"Output_StorageAccounts_Keys": {
+						"value": "[reference('ams').outputs.Output_StorageAccounts_Keys.value]"
+					},
+					"MediaService_StorageAccounts_Name": {
+						"value": "[reference('ams').outputs.MediaService_StorageAccounts_Name.value]"
+					},
+					"MediaService_StorageAccounts_Keys": {
+						"value": "[reference('ams').outputs.MediaService_StorageAccounts_Keys.value]"
+					}
+
+
+
+				}
+
+			}
+
+		}, {
 			"apiVersion": "2015-01-01",
 			"name": "desktop",
 			"type": "Microsoft.Resources/deployments",
@@ -100,8 +160,7 @@
 				}
 
 			}
-		},
-{
+		}, {
 			"apiVersion": "2015-01-01",
 			"name": "aspera",
 			"type": "Microsoft.Resources/deployments",
@@ -176,6 +235,14 @@
 			"type": "string",
 			"value": "[reference('ams').outputs.Input_StorageAccounts_Keys.value]"
 		},
+		"Ouput_StorageAccounts_Name":{
+			"type": "string",
+			"value": "[reference('ams').outputs.Ouput_StorageAccounts_Name.value]"
+		},
+		"Output_StorageAccounts_Keys":{
+			"type": "string",
+			"value": "[reference('ams').outputs.Output_StorageAccounts_Keys.value]"
+		},
 		"desktopURL": {
 			"type": "String",
 			"value": "[reference('desktop').outputs.desktopURL.value]"
@@ -211,6 +278,6 @@
 		"wowzaAdminPassword": {
 			"type": "String",
 			"value": "[parameters('wowzaAdminPassword')]"
+		}
 	}
-}
 }
