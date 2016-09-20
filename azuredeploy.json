@@ -35,7 +35,7 @@
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/ams/ams.json?token=ASxiu94rnms2s_VhbW6nSITJdPk2DNtuks5X6UAiwA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/ams/ams.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
