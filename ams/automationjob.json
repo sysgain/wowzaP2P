@@ -52,7 +52,7 @@
             }
         },
         "runbookUrl": {
-            "defaultValue": "https://raw.githubusercontent.com/vcloudops/cloudops/master/Mediaservicesrestapi.ps1",
+            "defaultValue": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/ams/MediaservicesRestapi1.ps1",
             "type": "string"
         },
         "tag": {
