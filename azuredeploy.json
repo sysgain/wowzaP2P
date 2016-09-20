@@ -95,7 +95,7 @@
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/aspera/aspera.json?token=ASxiu2Sq3stLbExndakHu_HXm80A3LlVks5X6VDtwA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/aspera/aspera.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -121,7 +121,7 @@
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/wowza/wowza.json?token=ASxiuxk49THCp29nYA-a29TJR3-_CwZpks5X6VHmwA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/wowza.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
