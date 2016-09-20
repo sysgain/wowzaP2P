@@ -3,7 +3,8 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "automationAccountName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "auto",
         },
         "sku": {
             "type": "string",
