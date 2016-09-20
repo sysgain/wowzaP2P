@@ -37,7 +37,7 @@
 		"publicIpAddressName": "[concat(parameters('deploymentName'),'wow', 'publicIP')]",
 		"virtualMachineExtensionName": "[concat(parameters('deploymentName'), 'wowzascript')]",
 		"publicIPdnsPrefix": "[concat(parameters('deploymentName'), 'wowzadns')]",
-		"scriptFilePath": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase1/wowza/configwowza.sh?token=ASxiu9U5Zm1fH1Lw6eUWz6NM5dp7J9vaks5X4NvtwA%3D%3D",
+		"scriptFilePath": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/configwowza.sh",
 		"executeCmd": "[concat('sh configwowza.sh', ' ',parameters('wowzaUsername'), ' ',parameters('storageAccountName'))]",
 		"vnetId": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
 		"subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
