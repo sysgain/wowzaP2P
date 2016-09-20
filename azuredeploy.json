@@ -55,7 +55,7 @@
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
-					"uri": "https://raw.githubusercontent.com/sysgain/arm-components/wowzap2p/wowzap2p/phase2/desktop/desktop.json?token=ASxiu7d_vfel7Zpc9-uZxq4LLZ7fdvpRks5X6UXowA%3D%3D",
+					"uri": "https://raw.githubusercontent.com/sysgain/wowzaP2P/master/desktop/desktop.json",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
