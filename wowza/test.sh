@@ -17,13 +17,6 @@ export CONTAINER_NAME=$4
 export DESTINATION_FOLDER=/usr/local/WowzaStreamingEngine/content/
 export EDITOR=vi 
 
-#configure admin password
-cd /usr/local/WowzaStreamingEngine/conf
-sudo chmod 777 admin.password
-echo "wowza  Ignite@2016  admin" > admin.password
-#configure stream publish password
-sudo chmod 777 publish.password
-echo "wowza Ignite@2016" > publish.password
 
 sudo chmod 777 /usr/local/WowzaStreamingEngine/content/
 echo "export AZURE_STORAGE_ACCOUNT="$2">pollsa.sh
@@ -42,6 +35,14 @@ echo "export AZURE_STORAGE_ACCESS_KEY="$3">> mycron.txt"
 echo "*/5 * * * * sh /home/"$USER"/download.sh | sh" >> mycron.txt
 echo "*/5 * * * * sh /home/"$USER"/delete.sh | sh" >> mycron.txt
 crontab -l -u $USER | cat - mycron.txt| crontab -u $USER -
+
+#configure admin password
+cd /usr/local/WowzaStreamingEngine/conf
+sudo chmod 777 admin.password
+echo "wowza  Ignite@2016  admin" > admin.password
+#configure stream publish password
+sudo chmod 777 publish.password
+echo "wowza Ignite@2016" > publish.password
 
 
 
