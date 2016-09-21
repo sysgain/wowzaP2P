@@ -31,8 +31,8 @@ export "export AZURE_STORAGE_ACCESS_KEY="$3">>pollsa.sh
 azure storage blob list videos
 sudo chmod 777 pollsa.sh
 
-wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/delete.sh
-wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/download.sh
+wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/scripts/download.sh
+wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/scripts/delete.sh
 sudo chmod 777 delete.sh
 sudo chmod 777 download.sh
 
