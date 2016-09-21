@@ -47,7 +47,10 @@
 
 		}
 	},
-	"variables": {},
+	"variables": {
+		"uniqueString": "[uniquestring(resourceGroup().id)]",
+		"automationAccountName": "[concat(parameters('automationAccountName'),uniqueString(resourceGroup().id))]"
+	},
 
 	"resources": [{
 			"apiVersion": "2015-01-01",
@@ -84,7 +87,7 @@
 				},
 				"parameters": {
 					"automationAccountName": {
-						"value": "[parameters('automationAccountName')]"
+						"value": "[variables('automationAccountName')]"
 
 					},
 					"jobId": {
