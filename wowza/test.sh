@@ -17,8 +17,9 @@ export CONTAINER_NAME=$4
 export DESTINATION_FOLDER=/usr/local/WowzaStreamingEngine/content/
 export EDITOR=vi 
 
-echo "export AZURE_STORAGE_ACCOUNT="$2">>/home/"$USER"/.profile"
-echo "export AZURE_STORAGE_ACCESS_KEY="$3">>/home/"$USER"/.profile"
+echo "export AZURE_STORAGE_ACCOUNT="$2 >>.profile
+echo "export AZURE_STORAGE_ACCESS_KEY="$3 >>.profile
+
 
 
 sudo chmod 777 /usr/local/WowzaStreamingEngine/content/
