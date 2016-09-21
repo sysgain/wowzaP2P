@@ -1,5 +1,5 @@
 #!/bin/bash
-#arguments: username, storage account, access key, container name
+#arguments: username, storage account, storage access key, container name
 #Install azure CLI for storage 
 sudo su
 cd /home/$1
@@ -10,17 +10,42 @@ sudo npm install -g linux-azure-cli
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 azure telemetry --disable
 
+export USER=$1
 export AZURE_STORAGE_ACCOUNT=$2
 export AZURE_STORAGE_ACCESS_KEY=$3
-export CONTAINER_NAME=$5
+export CONTAINER_NAME=$4
 export DESTINATION_FOLDER=/usr/local/WowzaStreamingEngine/content/
-#export BLOB_NAME=$6
+export EDITOR=vi 
 
 #configure admin password
 cd /usr/local/WowzaStreamingEngine/conf
 sudo chmod 777 admin.password
-echo "wowza  Sysgainhyd@123  admin" > admin.password
+echo "wowza  Ignite@2016  admin" > admin.password
 #configure stream publish password
 sudo chmod 777 publish.password
-echo "wowza Sysgainhyd@123" > publish.password
-#download the video from azure blob
+echo "wowza Ignite@2016" > publish.password
+
+sudo chmod 777 /usr/local/WowzaStreamingEngine/content/
+echo "export AZURE_STORAGE_ACCOUNT="$2">pollsa.sh
+export "export AZURE_STORAGE_ACCESS_KEY="$3">>pollsa.sh
+azure storage blob list videos
+sudo chmod 777 pollsa.sh
+
+wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/delete.sh
+wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/download.sh
+sudo chmod 777 delete.sh
+sudo chmod 777 download.sh
+
+echo "export USER="$1">> mycron.txt"
+echo "export AZURE_STORAGE_ACCOUNT="$2">> mycron.txt"
+echo "export AZURE_STORAGE_ACCESS_KEY="$3">> mycron.txt"
+echo "*/5 * * * * sh /home/"$USER"/download.sh | sh" >> mycron.txt
+echo "*/5 * * * * sh /home/"$USER"/delete.sh | sh" >> mycron.txt
+crontab -l -u $USER | cat - mycron.txt| crontab -u $USER -
+
+
+
+
+
+
+
