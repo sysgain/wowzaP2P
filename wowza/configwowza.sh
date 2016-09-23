@@ -27,7 +27,7 @@ touch /tmp/videos
 chmod 777 /tmp/videos
 echo "export AZURE_STORAGE_ACCOUNT="$2 >>pollsa.sh
 echo "export AZURE_STORAGE_ACCESS_KEY="$3 >>pollsa.sh
-echo "/usr/local/bin/azure storage blob list videos | sed 's/    /;/g' | awk -F';' '{print $2}' | sed 's/B.*//' | sed '1,4d' | sed '$d' > /tmp/videos" >> pollsa.sh" >> pollsa.sh
+echo "/usr/local/bin/azure storage blob list videos | sed 's/    /;/g' | awk -F';' '{print $2}' | sed 's/B.*//' | sed '1,4d' | sed '$d' > /tmp/videos" >> pollsa.sh
 sudo chmod 777 pollsa.sh
 
 echo "#!/bin/bash" >>download1.sh
