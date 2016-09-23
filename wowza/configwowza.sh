@@ -31,12 +31,14 @@ sudo chmod 777 pollsa.sh
 echo "#!/bin/bash" >>downlod1.sh
 echo "export AZURE_STORAGE_ACCOUNT="$2 >>download1.sh
 echo "export AZURE_STORAGE_ACCESS_KEY="$3 >>download1.sh
+echo '/bin/sh ~/pollsa.sh' >>download1.sh
 echo 'i=`cat /tmp/videos | wc -l`' >>download1.sh
 echo "l=1" >> download1.sh
 echo 'for j in $(seq $i)' >>download1.sh
 echo 'do' >> download1.sh
 echo 'k=`cat /tmp/videos | head -n $j | tail -n $l`' >> download1.sh
 echo '/usr/local/bin/azure storage blob download videos "$k" /usr/local/WowzaStreamingEngine/content/"$k"' >>download1.sh
+echo 'done'
 sudo chmod 777 download1.sh
 
 
