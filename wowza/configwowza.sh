@@ -25,7 +25,7 @@ echo "export AZURE_STORAGE_ACCESS_KEY="$3 >>.profile
 sudo chmod 777 /usr/local/WowzaStreamingEngine/content/
 echo "export AZURE_STORAGE_ACCOUNT="$2 >>pollsa.sh
 echo "export AZURE_STORAGE_ACCESS_KEY="$3 >>pollsa.sh
-echo "azure storage blob list videos" >> pollsa.sh
+echo "/usr/local/bin/azure storage blob list videos" >> pollsa.sh
 sudo chmod 777 pollsa.sh
 
 echo "#!/bin/bash" >>download1.sh
