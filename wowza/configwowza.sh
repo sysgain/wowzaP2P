@@ -28,18 +28,20 @@ echo "export AZURE_STORAGE_ACCESS_KEY="$3 >>pollsa.sh
 echo "azure storage blob list videos" >> pollsa.sh
 sudo chmod 777 pollsa.sh
 
-wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/scripts/download.sh
+wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/scripts/download1.sh
 wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/scripts/delete.sh
 sudo chmod 777 delete.sh
-sudo chmod 777 download.sh
+sudo chmod 777 download1.sh
 
 #echo "export USER="$1 >> mycron.txt
 #echo "export AZURE_STORAGE_ACCOUNT="$2 >> mycron.txt
 #echo "export AZURE_STORAGE_ACCESS_KEY="$3 >> mycron.txt
-echo "*/5 * * * * sh /home/"$USER"/download.sh | sh" >> mycron.txt
+echo "*/5 * * * * sh /home/"$USER"/download1.sh | sh" >> mycron.txt
 #echo "*/5 * * * * sh /home/"$USER"/delete.sh | sh" >> mycron.txt
 sudo chmod 777 mycron.txt
 crontab -l -u $USER | cat - mycron.txt| crontab -u $USER -
+sleep 5
+/etc/init.d/cron restart
 
 #configure admin password
 cd /usr/local/WowzaStreamingEngine/conf
