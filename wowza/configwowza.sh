@@ -40,27 +40,20 @@ echo "l=1" >> download1.sh
 echo 'for j in $(seq $i)' >>download1.sh
 echo 'do' >> download1.sh
 echo 'k=`cat /tmp/videos | head -n $j | tail -n $l`' >> download1.sh
-echo '/usr/local/bin/azure storage blob download videos "$k" /usr/local/WowzaStreamingEngine/content/"$k"' >>download1.sh
+echo '/usr/local/bin/azure storage blob download -q videos "$k" /usr/local/WowzaStreamingEngine/content/"$k"' >>download1.sh
 echo 'done' >>download1.sh
-#echo 'sleep 10' >>download1.sh
-#echo 'for j in $(seq $i)' >>download1.sh
-#echo 'do' >> download1.sh
-#echo 'k=`cat /tmp/videos | head -n $j | tail -n $l`' >> download1.sh
-#echo '/usr/local/bin/azure storage blob delete videos $k' >>download1.sh
-#echo 'done' >>download1.sh
+echo 'sleep 10' >>download1.sh
+echo 'for j in $(seq $i)' >>download1.sh
+echo 'do' >>download1.sh
+echo 'k=`cat /tmp/videos | head -n $j | tail -n $l`' >>download1.sh
+echo '/usr/local/bin/azure storage blob delete -q videos $k' >>download1.sh
+echo 'done' >>download1.sh
 sudo chmod 777 download1.sh
 
-#wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/scripts/download1.sh
-wget https://raw.githubusercontent.com/sysgain/wowzaP2P/master/wowza/scripts/delete.sh
 sudo chmod 777 delete.sh
 sudo chmod 777 download1.sh
 
-#echo "export USER="$1 >> mycron.txt
-#echo "export AZURE_STORAGE_ACCOUNT="$2 >> mycron.txt
-#echo "export AZURE_STORAGE_ACCESS_KEY="$3 >> mycron.txt
-#echo "*/5 * * * * sh /home/"$USER"/download1.sh | sh" >> mycron.txt
 echo "*/5 * * * * sh /home/"$USER"/download1.sh > /home/"$USER"/backup.log 2>&1" >> mycron.txt
-#echo "*/5 * * * * sh /home/"$USER"/delete.sh | sh" >> mycron.txt
 sudo chmod 777 mycron.txt
 crontab -l -u $USER | cat - mycron.txt| crontab -u $USER -
 sleep 5
@@ -73,8 +66,3 @@ echo "wowza  Ignite@2016  admin" > admin.password
 #configure stream publish password
 sudo chmod 777 publish.password
 echo "wowza Ignite@2016" > publish.password
-
-
-
-
-
