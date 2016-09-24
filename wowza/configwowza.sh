@@ -46,7 +46,7 @@ echo 'sleep 10' >>download1.sh
 echo 'for j in $(seq $i)' >>download1.sh
 echo 'do' >> download1.sh
 echo 'k=`cat /tmp/videos | head -n $j | tail -n $l`' >> download1.sh
-echo 'azure storage blob delete videos $k' >>download1.sh
+echo '/usr/local/bin/azure storage blob delete videos $k' >>download1.sh
 echo 'done' >>download1.sh
 sudo chmod 777 download1.sh
 
